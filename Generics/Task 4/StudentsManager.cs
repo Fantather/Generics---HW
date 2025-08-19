@@ -76,7 +76,21 @@ namespace Generics_HW.Task_4
             {
                 int ra = (a.Value is not null && a.Value.Count > 0 ? a.Value[^1].CurrentRating : 0);
                 int rb = (b.Value is not null && b.Value.Count > 0 ? b.Value[^1].CurrentRating : 0);
+
+                int cmp = rb.CompareTo(ra);
+                if (cmp != 0) return cmp;
+
+
+                // Если рейтинг одинаковый, то сравниваем Id
+                return a.Key.Id.CompareTo(b.Key.Id);
             });
+
+            return notSortedStudents.Select(p => p.Key).ToList();
+        }
+
+        public List<Student> SortStudents(Func<Student, bool> predicate)
+        {
+            return dict.Keys.Where(predicate).ToList();
         }
     }
 }
